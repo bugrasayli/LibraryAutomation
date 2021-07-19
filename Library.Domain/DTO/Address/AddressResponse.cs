@@ -7,6 +7,6 @@ namespace Library.Domain.DTO.Address
     public class AddressResponse
     {
         public int ID { get; set; }
-        public string Name { get; set; }
+        public string Detail { get; set; }
     }
 }
