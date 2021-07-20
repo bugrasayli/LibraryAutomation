@@ -1,4 +1,5 @@
-﻿using Library.Domain.DTO.Writer;
+﻿using Library.Domain.DTO.Book;
+using Library.Domain.DTO.Writer;
 using Library.Domain.IMapper;
 using Library.Domain.IRepository;
 using Library.Domain.IServices;
@@ -13,12 +14,14 @@ namespace Library.Domain.Service
     public class WriterService : IWriterService
     {
         private readonly IWriterRepository _repo;
+        private readonly IBookMapper _mapperBook;
         private readonly IWriterMapper _mapper;
 
-        public WriterService(IWriterRepository repo, IWriterMapper mapper)
+        public WriterService(IWriterRepository repo, IWriterMapper mapper,IBookMapper mapperBook)
         {
             _repo = repo;
             _mapper = mapper;
+            _mapperBook = mapperBook;
         }
         public async Task<WriterResponse> Add(AddWriterRequest writer)
         {
@@ -56,6 +59,12 @@ namespace Library.Domain.Service
             if (request == null)
                 throw new ArgumentException("There is no Writer");
             return _mapper.Map(record);
+        }
+
+        public async Task<IEnumerable<BookResponse>> GetBookByWriter(WriterRequest request)
+        {
+            var result = await _repo.GetBookByWriter(request.ID);
+            return result.Select(x=> _mapperBook.Map(x));
         }
     }
 }

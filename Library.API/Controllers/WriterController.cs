@@ -33,6 +33,13 @@ namespace Library.API.Controllers
             var result = await _writer.Get(new WriterRequest {ID=ID });
             return Ok(result);
         }
+
+        [HttpGet("{id}/book")]
+        public async Task<IActionResult> GetByWriter(int ID)
+        {
+            var result = await _writer.GetBookByWriter(new WriterRequest { ID = ID });
+            return Ok(result);
+        }
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddWriterRequest writer)
         {

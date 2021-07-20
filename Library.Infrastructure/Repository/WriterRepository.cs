@@ -2,6 +2,7 @@
 using Library.Domain.IRepository;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -61,6 +62,16 @@ namespace Library.Infrastructure.Repository
         {
             _context.Dispose();
             UnitOfWork.Dispose();
+        }
+
+        public async Task<IEnumerable<Book>> GetBookByWriter(int ID)
+        {
+            var result = await _context.Book.Where(x => x.WriterId == ID)
+                .Include(x => x.Kind)
+                .Include(x => x.Writer)
+                .AsNoTracking()
+                .ToListAsync();
+            return result;
         }
     }
 }

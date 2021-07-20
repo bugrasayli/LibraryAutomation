@@ -17,7 +17,6 @@ namespace Library.Domain.Mapper
             _writerMapper = writerMapper;
             _kindMapper = kindMapper;
         }
-
         public Book Map(AddBookRequest book)
         {
             if (book == null)
@@ -27,7 +26,7 @@ namespace Library.Domain.Mapper
                 Name = book.Name,
                 Stock =book.Stock,
                 KindId = book.KindId,
-                WriterId = book.KindId,
+                WriterId = book.WriterId,
             };
         }
         public Book Map(EditBookRequest book)
@@ -36,10 +35,11 @@ namespace Library.Domain.Mapper
                 return null;
             return new Book
             {
+                ID = book.ID,
                 Name = book.Name,
                 Stock = book.Stock,
                 KindId = book.KindId,
-                WriterId = book.KindId,
+                WriterId = book.WriterId
             };
         }
         public BookResponse Map(Book book)
@@ -50,6 +50,7 @@ namespace Library.Domain.Mapper
             {
                 ID = book.ID,
                 Name = book.Name,
+                Stock =book.Stock,
                 Kind = _kindMapper.Map(book.Kind),
                 Writer = _writerMapper.Map(book.Writer)
             };

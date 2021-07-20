@@ -10,6 +10,7 @@ namespace Library.Domain.IRepository
     public interface IWriterRepository :IRepository,IUnitOfWork
     {
         Task<IEnumerable<Writer>> Get();
+        Task<IEnumerable<Book>> GetBookByWriter(int ID);
         Task<Writer> Get(int ID);
         Writer Post(Writer writer);
         Writer Edit(Writer writer);

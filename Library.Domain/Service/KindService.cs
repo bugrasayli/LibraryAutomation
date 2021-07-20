@@ -1,4 +1,5 @@
-﻿using Library.Domain.DTO.Kind;
+﻿using Library.Domain.DTO.Book;
+using Library.Domain.DTO.Kind;
 using Library.Domain.IMapper;
 using Library.Domain.IRepository;
 using Library.Domain.IServices;
@@ -8,16 +9,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.Infrastructure.Service
+namespace Library.Domain.Service
 {
     public class KindService : IKindService
     {
         private readonly IKindMapper _mapper;
+        private readonly IBookMapper _mapperBook;
         private readonly IKindRepository _kind;
 
-        public KindService(IKindMapper mapper, IKindRepository kind)
+        public KindService(IKindMapper mapper, IKindRepository kind,IBookMapper mapperBook)
         {
             _mapper = mapper;
+            _mapperBook = mapperBook;
             _kind = kind;
         }
 
@@ -61,6 +64,12 @@ namespace Library.Infrastructure.Service
             if (result == null)
                 throw new ArgumentException("No found Kind");
             return _mapper.Map(result);
+        }
+
+        public async Task<IEnumerable<BookResponse>> GetBookByKind(KindRequest request)
+        {
+            var result = await _kind.GetBookByKind(request.ID);
+            return result.Select(x=> _mapperBook.Map(x));
         }
     }
 }

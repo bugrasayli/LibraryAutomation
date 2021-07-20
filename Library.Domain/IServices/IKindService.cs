@@ -1,4 +1,5 @@
-﻿using Library.Domain.DTO.Kind;
+﻿using Library.Domain.DTO.Book;
+using Library.Domain.DTO.Kind;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,6 +14,7 @@ namespace Library.Domain.IServices
         Task<KindResponse> Edit(EditKindRequest kind);
         Task<KindResponse> Add(AddKindRequest kind);
         Task<KindResponse> Delete(KindResponse request);
+        Task<IEnumerable<BookResponse>> GetBookByKind(KindRequest request);
         
     }
 }

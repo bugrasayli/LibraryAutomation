@@ -10,6 +10,7 @@ namespace Library.Domain.IRepository
     {
         Task<Kind> Get(int id);
         Task<IEnumerable<Kind>> Get();
+        Task<IEnumerable<Book>> GetBookByKind(int ID);
         Kind Post(Kind kind);
         Kind Update(Kind kind);
         Kind Delete(Kind kind);

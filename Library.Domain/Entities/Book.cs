@@ -12,7 +12,7 @@ namespace Library.Domain.Entities
         public int KindId { get; set; }
         public int WriterId { get; set; }
 
-        public Kind Kind { get; set; }
-        public Writer Writer{ get; set; }
+        public virtual Kind Kind { get; set; }
+        public virtual Writer Writer{ get; set; }
     }
 }

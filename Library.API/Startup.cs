@@ -5,14 +5,12 @@ using Library.Domain.Mapper;
 using Library.Domain.Service;
 using Library.Infrastructure;
 using Library.Infrastructure.Repository;
-using Library.Infrastructure.Service;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 
 namespace Library.API
 {
@@ -36,6 +34,14 @@ namespace Library.API
             services.AddScoped<IKindService, KindService>();
             services.AddScoped<IKindMapper, KindMapper>();
             services.AddScoped<IKindRepository, KindRepository>();
+            
+            services.AddScoped<IAddressService, AddressService>();
+            services.AddScoped<IAddressMapper, AddressMapper>();
+            services.AddScoped<IAddressRepository, AddressRepository>();
+
+            services.AddScoped<IBookMapper, BookMapper>();
+            services.AddScoped<IBookRepository, BookRepository>();
+            services.AddScoped<IBookService, BookService>();
 
             services.AddControllers();
             services.AddDbContext<LibraryContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default")));

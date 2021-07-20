@@ -1,4 +1,5 @@
-﻿using Library.Domain.DTO.Writer;
+﻿using Library.Domain.DTO.Book;
+using Library.Domain.DTO.Writer;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,6 +14,7 @@ namespace Library.Domain.IServices
         Task<WriterResponse> Add(AddWriterRequest writer);
         Task<WriterResponse> Edit(EditWriterRequest writer);
         Task<WriterResponse> Delete(WriterRequest request);
+        Task<IEnumerable<BookResponse>> GetBookByWriter(WriterRequest request);
 
     }
 }
