@@ -26,7 +26,9 @@ namespace Library.Domain.Service
 
         public async Task<KindResponse> Add(AddKindRequest kind)
         {
-            var result = _kind.Post(_mapper.Map(kind));
+            if (kind == null)
+                throw new ArgumentException("Book couldn't find");
+            var result = _kind.Add(_mapper.Map(kind));
             await _kind.UnitOfWork.SaveChangesAsync();
             return _mapper.Map(result);
         }
@@ -35,7 +37,7 @@ namespace Library.Domain.Service
         {
             var existedRecord = await _kind.Get(request.ID);
             if (existedRecord == null) 
-                throw new ArgumentException("No Kind found");
+                throw new ArgumentException("Kind couldn't find");
 
             var entity = _kind.Delete(existedRecord);
             await _kind.UnitOfWork.SaveChangesAsync();
@@ -46,8 +48,8 @@ namespace Library.Domain.Service
         {
             var existedRecord = await _kind.Get(kind.ID);
             if (existedRecord == null)
-                throw new ArgumentException("No found kind");
-            var entity = _kind.Update(_mapper.Map(kind));
+                throw new ArgumentException("Book couldn't find");
+            var entity = _kind.Edit(_mapper.Map(kind));
             await _kind.UnitOfWork.SaveChangesAsync();
             return _mapper.Map(entity);
         }
@@ -62,7 +64,7 @@ namespace Library.Domain.Service
         {
             var result = await _kind.Get(request.ID);
             if (result == null)
-                throw new ArgumentException("No found Kind");
+                throw new ArgumentException("Book couldn't find");
             return _mapper.Map(result);
         }
 

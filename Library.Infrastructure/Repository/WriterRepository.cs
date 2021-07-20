@@ -30,7 +30,7 @@ namespace Library.Infrastructure.Repository
             return result;
         }
 
-        public Writer Post(Writer writer)
+        public Writer Add(Writer writer)
         {
             var result = _context.Writer.Add(writer).Entity;
             return result;
@@ -46,22 +46,6 @@ namespace Library.Infrastructure.Repository
         {
             _context.Writer.Remove(writer);
             return writer;
-        }
-
-        public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Dispose()
-        {
-            _context.Dispose();
-            UnitOfWork.Dispose();
         }
 
         public async Task<IEnumerable<Book>> GetBookByWriter(int ID)

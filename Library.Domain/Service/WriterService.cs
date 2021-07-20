@@ -25,7 +25,9 @@ namespace Library.Domain.Service
         }
         public async Task<WriterResponse> Add(AddWriterRequest writer)
         {
-            var result = _repo.Post(_mapper.Map(writer));
+            if (writer == null)
+                throw new ArgumentException("writer couldn't find");
+            var result = _repo.Add(_mapper.Map(writer));
             await _repo.UnitOfWork.SaveChangesAsync();
             return _mapper.Map(result);
         }
@@ -33,7 +35,7 @@ namespace Library.Domain.Service
         {
             var existedRecord = await _repo.Get(request.ID);
             if (existedRecord == null)
-                throw new ArgumentException("Writer cannot found");
+                throw new ArgumentException("Writer couldn't find");
             var record = _repo.Delete(existedRecord);
             await _repo.UnitOfWork.SaveChangesAsync();
             return _mapper.Map(record);
@@ -42,7 +44,7 @@ namespace Library.Domain.Service
         {
             var existedRecord = await _repo.Get(writer.ID);
             if (existedRecord == null)
-                throw new ArgumentException("Writer cannot found");
+                throw new ArgumentException("Writer couldn't find");
             var entity = _mapper.Map(writer);
             _repo.Edit(entity);
             await _repo.UnitOfWork.SaveChangesAsync();
@@ -56,8 +58,6 @@ namespace Library.Domain.Service
         public async Task<WriterResponse> Get(WriterRequest request)
         {
             var record = await _repo.Get(request.ID);
-            if (request == null)
-                throw new ArgumentException("There is no Writer");
             return _mapper.Map(record);
         }
 

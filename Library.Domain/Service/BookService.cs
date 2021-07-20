@@ -22,6 +22,8 @@ namespace Library.Domain.Service
         }
         public async Task<BookResponse> Add(AddBookRequest book)
         {
+            if (book == null)
+                throw new ArgumentException("Book couldn't find");
             var result = _repo.Add(_mapper.Map(book));
             await _repo.UnitOfWork.SaveChangesAsync();
             var existedRecord = await Get(new BookRequest { 
@@ -32,7 +34,7 @@ namespace Library.Domain.Service
         {
             var result = await _repo.Get(book.ID);
             if (result == null)
-                throw new ArgumentException("No Book Found");
+                throw new ArgumentException("Book couldn't find");
             _repo.Delete(result);
             await _repo.UnitOfWork.SaveChangesAsync();
             return _mapper.Map(result);
@@ -41,7 +43,7 @@ namespace Library.Domain.Service
         {
             var existedRecord = await _repo.Get(book.ID);
             if (existedRecord == null)
-                throw new ArgumentException("No book Found");
+                throw new ArgumentException("Book couldn't find");
             var result = _repo.Edit(_mapper.Map(book));
             await _repo.UnitOfWork.SaveChangesAsync();
             var record = await Get(new BookRequest {ID = result.ID });

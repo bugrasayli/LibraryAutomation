@@ -18,8 +18,6 @@ namespace Library.Infrastructure.Repository
         {
             _context = context;
         }
-
-
         public Address Add(Address address)
         {
             var result = _context.Address.Add(address).Entity;
@@ -30,12 +28,6 @@ namespace Library.Infrastructure.Repository
         {
             var result = _context.Address.Remove(address).Entity;
             return result;
-        }
-
-        public void Dispose()
-        {
-            _context.Dispose();
-            UnitOfWork.Dispose();
         }
 
         public async Task<IEnumerable<Address>> Get()
@@ -49,18 +41,7 @@ namespace Library.Infrastructure.Repository
             var result = await _context.Address.AsNoTracking().FirstOrDefaultAsync(x => x.ID == ID);
             return result;
         }
-
-        public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Address Update(Address address)
+        public Address Edit(Address address)
         {
             _context.Entry(address).State = EntityState.Modified;
             return address;

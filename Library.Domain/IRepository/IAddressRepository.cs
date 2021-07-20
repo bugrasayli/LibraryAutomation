@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Library.Domain.IRepository 
 {
-    public interface IAddressRepository : IRepository, IUnitOfWork
+    public interface IAddressRepository : IRepository
     {
         Task<IEnumerable<Address>> Get();
         Task<Address> Get(int ID);
         Address Add(Address address);
-        Address Update(Address address);
+        Address Edit(Address address);
         Address Delete(Address address);
     }
 }
