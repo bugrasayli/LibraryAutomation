@@ -17,7 +17,7 @@ namespace Library.Domain.Service
         private readonly IBookMapper _mapperBook;
         private readonly IKindRepository _kind;
 
-        public KindService(IKindMapper mapper, IKindRepository kind,IBookMapper mapperBook)
+        public KindService(IKindMapper mapper, IKindRepository kind, IBookMapper mapperBook)
         {
             _mapper = mapper;
             _mapperBook = mapperBook;
@@ -26,8 +26,6 @@ namespace Library.Domain.Service
 
         public async Task<KindResponse> Add(AddKindRequest kind)
         {
-            if (kind == null)
-                throw new ArgumentException("Book couldn't find");
             var result = _kind.Add(_mapper.Map(kind));
             await _kind.UnitOfWork.SaveChangesAsync();
             return _mapper.Map(result);
@@ -36,7 +34,7 @@ namespace Library.Domain.Service
         public async Task<KindResponse> Delete(KindResponse request)
         {
             var existedRecord = await _kind.Get(request.ID);
-            if (existedRecord == null) 
+            if (existedRecord == null)
                 throw new ArgumentException("Kind couldn't find");
 
             var entity = _kind.Delete(existedRecord);
@@ -57,21 +55,19 @@ namespace Library.Domain.Service
         public async Task<IEnumerable<KindResponse>> Get()
         {
             var result = await _kind.Get();
-            return result.Select(x=> _mapper.Map(x));
+            return result.Select(x => _mapper.Map(x));
         }
 
         public async Task<KindResponse> Get(KindRequest request)
         {
             var result = await _kind.Get(request.ID);
-            if (result == null)
-                throw new ArgumentException("Book couldn't find");
             return _mapper.Map(result);
         }
 
         public async Task<IEnumerable<BookResponse>> GetBookByKind(KindRequest request)
         {
             var result = await _kind.GetBookByKind(request.ID);
-            return result.Select(x=> _mapperBook.Map(x));
+            return result.Select(x => _mapperBook.Map(x));
         }
     }
 }

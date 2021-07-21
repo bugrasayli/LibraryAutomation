@@ -25,8 +25,6 @@ namespace Library.Domain.Service
         }
         public async Task<WriterResponse> Add(AddWriterRequest writer)
         {
-            if (writer == null)
-                throw new ArgumentException("writer couldn't find");
             var result = _repo.Add(_mapper.Map(writer));
             await _repo.UnitOfWork.SaveChangesAsync();
             return _mapper.Map(result);

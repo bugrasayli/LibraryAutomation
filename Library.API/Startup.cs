@@ -1,8 +1,10 @@
 using Library.Domain.IMapper;
 using Library.Domain.IRepository;
 using Library.Domain.IServices;
+using Library.Domain.IValidation;
 using Library.Domain.Mapper;
 using Library.Domain.Service;
+using Library.Domain.Validation;
 using Library.Infrastructure;
 using Library.Infrastructure.Repository;
 using Microsoft.AspNetCore.Builder;
@@ -29,20 +31,24 @@ namespace Library.API
             services.AddScoped<IWriterService, WriterService>();
             services.AddScoped<IWriterRepository, WriterRepository>();
             services.AddScoped<IWriterMapper, WriterMapper>();
+            services.AddScoped<IWriterValidation, WriterValidation>();
+            
 
 
             services.AddScoped<IKindService, KindService>();
             services.AddScoped<IKindMapper, KindMapper>();
             services.AddScoped<IKindRepository, KindRepository>();
+            services.AddScoped<IKindValidation, KindValidation>();
             
             services.AddScoped<IAddressService, AddressService>();
             services.AddScoped<IAddressMapper, AddressMapper>();
             services.AddScoped<IAddressRepository, AddressRepository>();
+            services.AddScoped<IAddressValidation, AddressValidation>();
 
             services.AddScoped<IBookMapper, BookMapper>();
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IBookService, BookService>();
-
+            services.AddScoped<IBookValidation, BookValidation>();
             services.AddControllers();
             services.AddDbContext<LibraryContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default")));
         }

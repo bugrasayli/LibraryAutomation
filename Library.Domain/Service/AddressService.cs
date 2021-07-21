@@ -25,8 +25,6 @@ namespace Library.Domain.Service
 
         public async Task<AddressResponse> Add(AddAddressRequest address)
         {
-            if (address == null)
-                throw new ArgumentException("Address couldn't find");
             var result = _repo.Add(_mapper.Map(address));
             await _repo.UnitOfWork.SaveChangesAsync();
             return _mapper.Map(result);
@@ -37,7 +35,7 @@ namespace Library.Domain.Service
             var existedRecord = await _repo.Get(request.ID);
             if (existedRecord == null)
                 throw new ArgumentException("Address couldn't find");
-            var record = _repo.Delete(existedRecord);
+            _repo.Delete(existedRecord);
             await _repo.UnitOfWork.SaveChangesAsync();
             return _mapper.Map(existedRecord);
         }

@@ -1,9 +1,8 @@
 ﻿using Library.Domain.DTO.Book;
 using Library.Domain.Entities;
 using Library.Domain.IMapper;
+using Library.Domain.Validation;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Library.Domain.Mapper
 {
@@ -11,16 +10,20 @@ namespace Library.Domain.Mapper
     {
         private readonly IWriterMapper _writerMapper;
         private readonly IKindMapper _kindMapper;
+        private readonly IBookValidation _bookValidation;
 
-        public BookMapper(IWriterMapper writerMapper, IKindMapper kindMapper)
+
+        public BookMapper(IWriterMapper writerMapper, IKindMapper kindMapper,IBookValidation bookValidation)
         {
             _writerMapper = writerMapper;
             _kindMapper = kindMapper;
+            _bookValidation = bookValidation;
         }
         public Book Map(AddBookRequest book)
         {
-            if (book == null)
-                return null;
+            var isValid = _bookValidation.AddBookValidation(book);
+            if (isValid != null)
+                throw new ArgumentException(isValid);
             return new Book
             {
                 Name = book.Name,
@@ -31,8 +34,9 @@ namespace Library.Domain.Mapper
         }
         public Book Map(EditBookRequest book)
         {
-            if (book == null)
-                return null;
+            var isValid = _bookValidation.EditBookValidation(book);
+            if (isValid != null)
+                throw new ArgumentException(isValid);
             return new Book
             {
                 ID = book.ID,

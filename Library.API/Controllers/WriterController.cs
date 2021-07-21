@@ -53,5 +53,12 @@ namespace Library.API.Controllers
             var result = await _writer.Edit(writer);
             return Ok(result);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var result = await _writer.Delete(new WriterRequest { ID = id });
+            return Ok(result);
+        }
     }
 }
