@@ -1,5 +1,4 @@
 ﻿using Library.Domain.DTO.Address;
-using Library.Domain.Entities;
 
 namespace Library.Domain.IValidation
 {

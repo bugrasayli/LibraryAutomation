@@ -1,4 +1,5 @@
 ﻿using Library.Domain.DTO.Book;
+using Library.Domain.DTO.Costumer;
 using Library.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,6 @@ namespace Library.Domain.IMapper
         Book Map(AddBookRequest book);
         Book Map(EditBookRequest book);
         BookResponse Map(Book book);
+        GetBookStockResponse MapStock(Book book);
     }
 }

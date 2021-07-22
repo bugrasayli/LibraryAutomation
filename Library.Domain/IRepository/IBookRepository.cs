@@ -10,8 +10,11 @@ namespace Library.Domain.IRepository
     {
         Task<IEnumerable<Book>> Get();
         Task<Book> Get(int ID);
+        Task<Book> GetBookStock(int ID);
+        Task<IEnumerable<Rent>> GetRents(int ID);
         Book Add(Book book);
         Book Edit(Book book);
         Book Delete(Book book);
+
     }
 }

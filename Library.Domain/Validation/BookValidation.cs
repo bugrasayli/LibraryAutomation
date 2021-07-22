@@ -1,6 +1,5 @@
 ﻿using Library.Domain.DTO.Book;
 using Library.Domain.Entities;
-using Library.Domain.IValidation;
 
 namespace Library.Domain.Validation
 {
@@ -28,6 +27,13 @@ namespace Library.Domain.Validation
                 return "KindID or BookID cannot be 0";
             return null;
 
+        }
+
+        public string StockBookValidation(Book book)
+        {
+            if (book == null)
+                return "Book couldn't find";
+            return null;
         }
     }
 }

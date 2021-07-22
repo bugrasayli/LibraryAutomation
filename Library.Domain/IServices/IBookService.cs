@@ -1,4 +1,6 @@
 ﻿using Library.Domain.DTO.Book;
+using Library.Domain.DTO.Rent;
+using Library.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,5 +15,6 @@ namespace Library.Domain.IServices
         Task<BookResponse> Delete(BookRequest book);
         Task<BookResponse> Get(BookRequest request);
         Task<IEnumerable<BookResponse>> Get();
+        Task<IEnumerable<RentResponse>> GetRents(BookRequest request);
     }
 }

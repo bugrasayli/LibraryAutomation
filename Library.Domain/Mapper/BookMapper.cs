@@ -59,5 +59,16 @@ namespace Library.Domain.Mapper
                 Writer = _writerMapper.Map(book.Writer)
             };
         }
+
+        public GetBookStockResponse MapStock(Book book)
+        {
+            var isValid = _bookValidation.StockBookValidation(book);
+            if (isValid != null)
+                throw new ArgumentException(isValid);
+            return new GetBookStockResponse
+            {
+                Stock = book.Stock
+            };
+        }
     }
 }

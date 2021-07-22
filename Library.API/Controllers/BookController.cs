@@ -29,7 +29,12 @@ namespace Library.API.Controllers
             var result = await _service.Get(new BookRequest { ID = id });
             return Ok(result);
         }
-
+        [HttpGet("{id}/rent")]
+        public async Task<IActionResult> GetRents(int id)
+        {
+            var result = await _service.GetRents(new BookRequest { ID = id });
+            return Ok(result);
+        }
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddBookRequest book)
         {

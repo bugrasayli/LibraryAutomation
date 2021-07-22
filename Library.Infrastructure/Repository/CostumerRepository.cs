@@ -1,10 +1,8 @@
 ﻿using Library.Domain.Entities;
 using Library.Domain.IRepository;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Library.Infrastructure.Repository
@@ -17,6 +15,8 @@ namespace Library.Infrastructure.Repository
         {
             _context = context;
         }
+        
+        
         public Costumer Delete(Costumer costumer)
         {
             var result = _context.Costumer.Remove(costumer).Entity;
@@ -35,6 +35,16 @@ namespace Library.Infrastructure.Repository
         public async Task<IEnumerable<Costumer>> Get(string Email)
         {
             var result = await _context.Costumer.Where(x=> x.Email.Contains(Email)).AsNoTracking().ToListAsync();
+            return result;
+        }
+        public async Task<IEnumerable<Rent>> GetByCostumer(int ID)
+        {
+            var result =await _context.Rent
+                .Where(x=> x.CostumerID == ID)
+                .Include(x=> x.Costumer)
+                .Include(x=> x.Book)
+                .AsNoTracking()
+                .ToListAsync();
             return result;
         }
         public Costumer Post(Costumer costumer)

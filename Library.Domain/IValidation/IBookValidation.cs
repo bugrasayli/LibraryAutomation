@@ -7,5 +7,6 @@ namespace Library.Domain.Validation
     {
         string AddBookValidation(AddBookRequest book);
         string EditBookValidation(EditBookRequest book);
+        string StockBookValidation(Book book);
     }
 }

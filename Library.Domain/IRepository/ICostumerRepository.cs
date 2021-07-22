@@ -10,8 +10,10 @@ namespace Library.Domain.IRepository
     {
         Task<IEnumerable<Costumer>> Get();
         Task<Costumer> Get(int ID);
+        Task<IEnumerable<Costumer>> Get(string Email);
         Costumer Post(Costumer costumer);
         Costumer Put(Costumer costumer);
         Costumer Delete(Costumer costumer);
+        Task<IEnumerable<Rent>> GetByCostumer(int ID);
     }
 }

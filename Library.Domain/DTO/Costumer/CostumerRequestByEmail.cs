@@ -4,9 +4,8 @@ using System.Text;
 
 namespace Library.Domain.DTO.Costumer
 {
-    public class CostumerRequest
+    public class CostumerRequestByEmail
     {
-        public int ID { get; set; }
         public string Email { get; set; }
     }
 }

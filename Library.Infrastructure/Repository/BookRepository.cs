@@ -3,6 +3,7 @@ using Library.Domain.IRepository;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,8 +36,8 @@ namespace Library.Infrastructure.Repository
         public async Task<IEnumerable<Book>> Get()
         {
             var result = await _context.Book
-                .Include(x=>x.Kind)
-                .Include(x=> x.Writer)
+                .Include(x => x.Kind)
+                .Include(x => x.Writer)
                 .AsNoTracking().ToListAsync();
             return result;
         }
@@ -44,9 +45,28 @@ namespace Library.Infrastructure.Repository
         {
             var result = await _context.Book
                 .Include(x => x.Kind)
-                .Include(x=> x.Writer).
-                AsNoTracking().FirstOrDefaultAsync(x=> x.ID  ==ID);
+                .Include(x => x.Writer).
+                AsNoTracking().FirstOrDefaultAsync(x => x.ID == ID);
             return result;
         }
+        public async Task<Book> GetBookStock(int ID)
+        {
+            var result = await _context.Book
+                .Where(x => x.ID == ID)
+                .Select(o => new Book { Stock = o.Stock })
+                .FirstOrDefaultAsync();
+            return result;
+        }
+
+        public async Task<IEnumerable<Rent>> GetRents(int ID)
+        {
+            var result = await _context.Rent.Where(x => x.BookID == ID)
+                .Include(x => x.Costumer)
+                .Include(x => x.Book)
+                .AsNoTracking()
+                .ToListAsync();
+            return result;
+        }
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Library.Domain.DTO.Book;
+using Library.Domain.DTO.Rent;
 using Library.Domain.IMapper;
 using Library.Domain.IRepository;
 using Library.Domain.IServices;
@@ -14,11 +15,13 @@ namespace Library.Domain.Service
     {
         private readonly IBookRepository _repo;
         private readonly IBookMapper _mapper;
+        private readonly IRentMapper _rentMapper;
 
-        public BookService(IBookRepository repo, IBookMapper mapper)
+        public BookService(IBookRepository repo, IBookMapper mapper, IRentMapper rentMapper)
         {
             _repo = repo;
             _mapper = mapper;
+            _rentMapper =rentMapper;
         }
         public async Task<BookResponse> Add(AddBookRequest book)
         {
@@ -57,5 +60,13 @@ namespace Library.Domain.Service
             var result = await _repo.Get();
             return result.Select(x => _mapper.Map(x));
         }
-    }
+        public async Task<IEnumerable<RentResponse>> GetRents(BookRequest request)
+        {
+            var result = await _repo.GetRents(request.ID);
+            if (result == null)
+                return null;
+            return result.Select(x => _rentMapper.Map(x));
+        }
+
+        }
 }

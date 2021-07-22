@@ -17,6 +17,7 @@ namespace Library.Infrastructure
         public DbSet<Kind> Kind { get; set; }
         public DbSet<Address> Address { get; set; }
         public DbSet<Costumer> Costumer{ get; set; }
+        public DbSet<Rent> Rent { get; set; }
 
         public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
         {

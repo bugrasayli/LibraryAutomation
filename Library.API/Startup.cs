@@ -51,7 +51,12 @@ namespace Library.API
             services.AddScoped<ICostumerMapper, CostumerMapper>();
             services.AddScoped<ICostumerRepository, CostumerRepository>();
             services.AddScoped<ICostumerService, CostumerService>();
-            services.AddScoped<ICostumerValidation, CostumerValidation>();
+            services.AddScoped<ICostumerValidation, CostumerValidation>(); 
+            
+            services.AddScoped<IRentMapper, RentMapper>();
+            services.AddScoped<IRentRepository, RentRepository>();
+            services.AddScoped<IRentService, RentService>();
+            services.AddScoped<IRentValidation, RentValidation>();
 
             services.AddControllers();
             services.AddDbContext<LibraryContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default")));
