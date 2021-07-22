@@ -32,8 +32,6 @@ namespace Library.API
             services.AddScoped<IWriterRepository, WriterRepository>();
             services.AddScoped<IWriterMapper, WriterMapper>();
             services.AddScoped<IWriterValidation, WriterValidation>();
-            
-
 
             services.AddScoped<IKindService, KindService>();
             services.AddScoped<IKindMapper, KindMapper>();
@@ -49,6 +47,12 @@ namespace Library.API
             services.AddScoped<IBookRepository, BookRepository>();
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IBookValidation, BookValidation>();
+            
+            services.AddScoped<ICostumerMapper, CostumerMapper>();
+            services.AddScoped<ICostumerRepository, CostumerRepository>();
+            services.AddScoped<ICostumerService, CostumerService>();
+            services.AddScoped<ICostumerValidation, CostumerValidation>();
+
             services.AddControllers();
             services.AddDbContext<LibraryContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default")));
         }

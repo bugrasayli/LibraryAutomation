@@ -3,14 +3,16 @@ using Library.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Library.Infrastructure.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    partial class LibraryContextModelSnapshot : ModelSnapshot
+    [Migration("20210721180133_Costumer Model was Added")]
+    partial class CostumerModelwasAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,7 +81,7 @@ namespace Library.Infrastructure.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Costumer");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Library.Domain.Entities.Kind", b =>

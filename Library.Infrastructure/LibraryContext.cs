@@ -1,9 +1,6 @@
 ﻿using Library.Domain.Entities;
 using Library.Domain.IRepository;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,6 +16,7 @@ namespace Library.Infrastructure
         public DbSet<Book> Book { get; set; }
         public DbSet<Kind> Kind { get; set; }
         public DbSet<Address> Address { get; set; }
+        public DbSet<Costumer> Costumer{ get; set; }
 
         public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default)
         {
