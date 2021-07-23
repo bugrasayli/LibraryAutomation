@@ -6,6 +6,7 @@ using Library.Domain.IServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -30,7 +31,6 @@ namespace Library.Domain.Service
             _bookRepo = bookRepo;
             _costumerRepo = costumerRepo;
         }
-
         public async Task<RentResponse> Add(AddRentRequest rent)
         {
             var bookExisted = await _bookRepo.Get(rent.BookId);
@@ -56,12 +56,10 @@ namespace Library.Domain.Service
             var existedRecord = await _rentRepo.Get(result.ID);
             return _rentMapper.Map(existedRecord);
         }
-
         public Task<RentResponse> Delete(RentRequestByID rent)
         {
             throw new NotImplementedException();
         }
-
         public async Task<RentResponse> Deliver(RentRequestByID rent)
         {
             var existedRecord = await _rentRepo.Get(rent.ID);
@@ -74,7 +72,7 @@ namespace Library.Domain.Service
             var result = _rentRepo.Edit(existedRecord);
             await _rentRepo.UnitOfWork.SaveChangesAsync();
 
-            var existedBook =await _bookRepo.Get(result.BookID);
+            var existedBook = await _bookRepo.Get(result.BookID);
             existedBook.Stock = existedBook.Stock + 1;
             _bookRepo.Edit(existedBook);
             await _bookRepo.UnitOfWork.SaveChangesAsync();
@@ -83,7 +81,7 @@ namespace Library.Domain.Service
 
         public async Task<RentResponse> Edit(EditRentRequest rent)
         {
-            var existedRecord =await _rentRepo.Get(rent.ID);
+            var existedRecord = await _rentRepo.Get(rent.ID);
 
             if (existedRecord == null)
                 throw new ArgumentException("Rent couldn't find");
@@ -100,16 +98,39 @@ namespace Library.Domain.Service
             return _rentMapper.Map(result);
         }
 
+
         public async Task<IEnumerable<RentResponse>> Get()
         {
             var result = await _rentRepo.Get();
             return result.Select(x => _rentMapper.Map(x));
         }
-
         public async Task<RentResponse> Get(RentRequestByID request)
         {
             var result = await _rentRepo.Get(request.ID);
             return _rentMapper.Map(result);
         }
+        public async Task<IEnumerable<RentResponse>> Filter(int bookId, int costumerId, string name, bool? isDelivered, bool? isLate)
+        {
+            var result = await _rentRepo.Get();
+            if (bookId != 0)
+            {
+                result = result.Where(x=> x.BookID == bookId);
+            }
+            if (costumerId != 0)
+            {
+                result = result.Where(x => x.CostumerID == costumerId);
+            }
+            if (isDelivered != null)
+            {
+                result = result.Where(x => x.Delivered == isDelivered);
+            }
+            if (isLate != null)
+            {
+                result = result.Where(x => (x.DeliverTime.Date - DateTime.Now.Date).Days < 0);
+            }
+            return result.Select(x => _rentMapper.Map(x));
+        }
+
+
     }
 }

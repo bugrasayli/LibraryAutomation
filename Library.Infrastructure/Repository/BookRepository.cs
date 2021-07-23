@@ -57,7 +57,6 @@ namespace Library.Infrastructure.Repository
                 .FirstOrDefaultAsync();
             return result;
         }
-
         public async Task<IEnumerable<Rent>> GetRents(int ID)
         {
             var result = await _context.Rent.Where(x => x.BookID == ID)

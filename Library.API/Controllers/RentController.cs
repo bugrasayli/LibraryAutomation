@@ -15,12 +15,10 @@ namespace Library.API.Controllers
     public class RentController : ControllerBase
     {
         private readonly IRentService _service;
-
         public RentController(IRentService service)
         {
             _service = service;
         }
-
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AddRentRequest rent)
         {
@@ -39,7 +37,7 @@ namespace Library.API.Controllers
             var result = await _service.Get(new RentRequestByID { ID = id });
             return Ok(result);
         }
-
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] EditRentRequest rent)
         {
@@ -51,6 +49,18 @@ namespace Library.API.Controllers
         public async Task<IActionResult> Deliver(int id)
         {
             var result =await _service.Deliver(new RentRequestByID { ID =id});
+            return Ok(result);
+        }
+
+        [HttpGet("filter")]
+        public async Task<IActionResult> Get(
+            [FromQuery]int book,
+            [FromQuery]int costumer,
+            [FromQuery]string name,
+            [FromQuery]bool? isDelivered,
+            [FromQuery]bool? isLate)
+        {
+            var result =await _service.Filter(book,costumer,name,isDelivered,isLate);
             return Ok(result);
         }
     }
