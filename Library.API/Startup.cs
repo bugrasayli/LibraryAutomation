@@ -1,3 +1,4 @@
+using Library.Domain.Cache;
 using Library.Domain.IMapper;
 using Library.Domain.IRepository;
 using Library.Domain.IServices;
@@ -40,6 +41,7 @@ namespace Library.API
             
             services.AddScoped<IAddressService, AddressService>();
             services.AddScoped<IAddressMapper, AddressMapper>();
+            services.AddScoped<IAddressCacheRepository, AddressCacheRepository>();
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IAddressValidation, AddressValidation>();
 
@@ -60,9 +62,12 @@ namespace Library.API
 
             services.AddControllers();
             services.AddDbContext<LibraryContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default")));
-        }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            services.AddStackExchangeRedisCache(options => {
+                options.Configuration = "localhost:8701";
+            });
+
+        }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -78,7 +83,7 @@ namespace Library.API
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                    endpoints.MapControllers();
             });
         }
     }
